@@ -24,6 +24,7 @@ Installation Requirements
 * [PyYAML][pyyaml]
 * [Compass][compass] and the [Compass 960 plugin][compass_960]
 * [Jinja2][jinja2]
+* [OptiPNG][optipng]
 
 Installing on Ubuntu:
 =====================
@@ -31,7 +32,7 @@ Installing on Ubuntu:
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2
-    $ sudo aptitude install sun-java6-jre
+    $ sudo aptitude install sun-java6-jre optipng
 
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
@@ -46,6 +47,7 @@ To configure Ubuntu to use Java 1.6 you can use the `update-java-alternatives` c
 
 Please see `update-java-alternatives --help`.
 
+[optipng]: http://optipng.sourceforge.net/
 [jinja2]: http://jinja.pocoo.org/2/
 [compass]: http://compass-style.org/
 [compass_installation]: http://wiki.github.com/chriseppstein/compass
