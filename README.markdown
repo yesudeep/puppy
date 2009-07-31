@@ -7,7 +7,10 @@ Requirements:
 * Linux
 * pyinotify
 * python2.5/python2.6
-* subcommand
-    http://github.com/anandology/subcommand/
+* [subcommand]
 * pyyaml
+
+
+
+[subcommand]: http://github.com/anandology/subcommand/
 
