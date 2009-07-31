@@ -25,6 +25,8 @@ Installation Requirements
 * [Compass][compass] and the [Compass 960 plugin][compass_960]
 * [Jinja2][jinja2]
 * [OptiPNG][optipng]
+* [JpegTran][jpegtran]
+* [PNGCrush][pngcrush]
 
 Installing on Ubuntu:
 =====================
@@ -32,7 +34,7 @@ Installing on Ubuntu:
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2
-    $ sudo aptitude install sun-java6-jre optipng
+    $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran
 
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
@@ -47,6 +49,8 @@ To configure Ubuntu to use Java 1.6 you can use the `update-java-alternatives` c
 
 Please see `update-java-alternatives --help`.
 
+[pngcrush]: http://pmt.sourceforge.net/pngcrush/
+[jpegtran]: http://jpegclub.org/
 [optipng]: http://optipng.sourceforge.net/
 [jinja2]: http://jinja.pocoo.org/2/
 [compass]: http://compass-style.org/
