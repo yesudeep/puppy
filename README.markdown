@@ -22,7 +22,8 @@ Bundled Software:
 * [JSMin][jsmin]
 * [Rhino JavaScript Engine][rhino]
 
-[issue_tracker]: http://happychickoo.lighthouseapp.com/projects/34621-puppy
+[lighthouse_issue_tracker]: http://happychickoo.lighthouseapp.com/projects/34621-puppy
+[issue_tracker]: http://github.com/yesudeep/puppy/issues
 [rhino]: http://www.mozilla.org/rhino/
 [jsmin]: http://crockford.com/javascript/jsmin
 [jslint]: http://jslint.com
