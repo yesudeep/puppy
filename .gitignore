@@ -1,0 +1,7 @@
+*~
+*.bak
+*.py[co]
+*.a
+*.so
+*.o
+__MACOSX
