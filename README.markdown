@@ -27,8 +27,8 @@ Installing on Ubuntu:
 
 Install the dependencies first:
 
-$ sudo easy_install pyinotify pyyaml
-$ sudo aptitude install sun-java6-jre
+    $ sudo easy_install pyinotify pyyaml
+    $ sudo aptitude install sun-java6-jre
 
 Notes:
 ======
@@ -37,7 +37,7 @@ Some Linux systems come with OpenJDK versions of Java.  YUI Compressor
 fails to generate minified files when used with these versions of Java.
 To configure Ubuntu to use Java 1.6 you can use the `update-java-alternatives` command.
 
-Please see `update-java-alternatives`.
+Please see `update-java-alternatives --help`.
 
 
 [lighthouse_issue_tracker]: http://happychickoo.lighthouseapp.com/projects/34621-puppy
