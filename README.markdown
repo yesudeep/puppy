@@ -15,7 +15,7 @@ Bundled Software:
 * [Mozilla Rhino JavaScript Engine][rhino]
 
 Installation Requirements
-=========================
+-------------------------
 * Linux
 * [Java 1.6][java_jre]
 * [Python 2.5 or Python 2.6][python]
@@ -23,7 +23,7 @@ Installation Requirements
 * [PyYAML][pyyaml]
 
 Installing on Ubuntu:
----------------------
+=====================
 
 Install the dependencies first:
 
