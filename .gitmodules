@@ -1,0 +1,3 @@
+[submodule "lib/subcommand"]
+	path = lib/subcommand
+	url = git://github.com/anandology/subcommand.git
