@@ -5,8 +5,8 @@ Puppy is a (driver) meta-framework for Python Web developers.
 Requirements:
 -------------
 * Linux
+* Python 2.5 or Python 2.6
 * [pyinotify][pyinotify]
-* python2.5/python2.6
 * [subcommand][subcommand]
 * [PyYAML][pyyaml]
 
