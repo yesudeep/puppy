@@ -2,7 +2,9 @@ Introduction
 ============
 Puppy is a (driver) meta-framework for Python Web developers.
 
-
+Bugs or enhancements?
+---------------------
+Please file them at the [issue tracker][issue_tracker].
 
 Requirements:
 -------------
@@ -20,6 +22,7 @@ Bundled Software:
 * [JSMin][jsmin]
 * [Rhino JavaScript Engine][rhino]
 
+[issue_tracker]: http://happychickoo.lighthouseapp.com/projects/34621-puppy
 [rhino]: http://www.mozilla.org/rhino/
 [jsmin]: http://crockford.com/javascript/jsmin
 [jslint]: http://jslint.com
