@@ -18,7 +18,8 @@ Installation Requirements
 -------------------------
 * Linux
 * [Java 1.6][java_jre]
-* [Python 2.5 or Python 2.6][python]
+* [Ruby 1.8][ruby_lang]
+* [Python 2.5 or Python 2.6][python_lang]
 * [pyinotify][pyinotify]
 * [PyYAML][pyyaml]
 * [Compass][compass] and the [Compass 960 plugin][compass_960]
@@ -55,7 +56,8 @@ Please see `update-java-alternatives --help`.
 [jsmin]: http://crockford.com/javascript/jsmin
 [jslint]: http://jslint.com
 [yui_compressor]: http://developer.yahoo.com/yui/compressor/
-[python]: http://www.python.org/
+[python_lang]: http://www.python.org/
+[ruby_lang]: http://www.ruby-lang.org/
 [java_jre]: http://java.sun.com/
 [pyinotify]: http://trac.dbzteam.org/pyinotify
 [pyyaml]: http://pyyaml.org/
