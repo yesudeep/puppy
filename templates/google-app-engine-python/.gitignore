@@ -1,0 +1,16 @@
+*~
+*.bak
+*.py[co]
+*.swp
+*.bkp
+
+# Crap introduced by various operating system.
+__MACOSX
+__MACOSX__
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Eclipse Preferences if you are using the Google Eclipse Plugin
+.settings/org.eclipse.core.resources.prefs
+

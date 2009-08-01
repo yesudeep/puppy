@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block tag_title %}Application Name{% endblock %}</title>
+
+        {% block unsupported_browser %}
+        <!--[if lt IE 7]>
+        <script type="text/javascript">window.location.href="/unsupported/browser/";</script>
+        <![endif]-->
+        {% endblock %}
+
+        {% block tag_head %}{% endblock %}
+    </head>
+    <body>
+        {% block tag_body %}{% endblock %}
+        <script src="{{ MEDIA_URL }}script/loader{{ MINIFIED }}.js"></script>
+        <script>
+        window.scripts = [
+        // Scripts common to all pages.
+        // "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js",
+        ];
+        </script>
+        {% tag_scripts %}
+        <!-- Override this block in child templates with an inline script
+             that simply adds script URLs to the above window.scripts
+             array.  All the scripts in that array will be loaded in parallel
+             for you automatically.  Example:
+
+             <script>
+                window.scripts.push(
+                    "{{ MEDIA_URL }}foolib/foolib{{ MINIFIED }}.js",
+                    {
+                    src: "{{ MEDIA_URL }}barlib/barlib{{ MINIFIED }}.js",
+                        type: "text/javascript",
+                        async: true,
+                        charset: "utf-8"
+                    }
+                );
+             </script> -->
+        {% endblock %}
+        <script>
+            getScripts(window.scripts);
+        </script>
+        {% tag_scripts_analytics %}
+        <!-- Place your analytics scripts here -->
+        {% endblock %}
+    </body>
+</html>
+

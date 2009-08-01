@@ -1,0 +1,28 @@
+application: {{ gae_app_name }}
+version: {{ gae_app_version }}
+runtime: {{ gae_runtime }}
+api_version: {{ gae_api_version }}
+
+handlers:
+#- url: /favicon.ico
+#  static_files: public/image/icon/favicon.png
+#  upload: public/image/icon/favicon.png
+#  secure: never
+
+- url: {{ media_url }}
+  static_dir: public
+  secure: never
+
+- url: /robots.txt
+  static_files: public/robots.txt
+  upload: public/robots.txt
+  secure: never
+  #expiration: 7d
+
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  login: admin
+
+- url: /*
+  script: main.py
+
