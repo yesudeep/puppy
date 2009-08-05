@@ -41,6 +41,8 @@ DEFAULT_SERVER_HOST = '0.0.0.0'
 DEFAULT_MEDIA_DEST_DIR = path_join('app', 'public')
 DEFAULT_MEDIA_SRC_DIR = 'media'
 
+SCHEDULED_BUILD_DELAY = 2   # seconds
+
 # Compass arguments
 COMPASS = 'compass'
 COMPASS_CONFIG = 'compass_config.rb'

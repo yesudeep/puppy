@@ -89,8 +89,27 @@ def action_build_daemon(project_dir):
             watches.append(watch_manager.add_watch(path, EVENTS_MASK, rec=True))
 
     except ImportError:
-        # :(
-        logging.debug('pyinotify not found, scheduling periodic builds')
+        logging.debug('pyinotify not found, scheduling periodic builds.')
+        import threading
+        import time
+
+        def auto_build():
+            action_compass(project_dir)
+            action_build(project_dir)
+
+        def repeat(event, every, action):
+            while True:
+                event.wait(every)
+                if event.isSet():
+                    break
+                action()
+
+        builder_event = threading.Event()
+        builder_thread = threading.Thread(name="Background Builder",
+                target=repeat,
+                args=(builder_event, config.SCHEDULED_BUILD_DELAY, auto_build))
+        builder_thread.start()
+
 
     try:
         logging.info('First build')
@@ -105,9 +124,12 @@ def action_build_daemon(project_dir):
                 watch_manager.rm_watch(watch.values())
             notifier.stop()
         except ImportError:
-            pass
-        sys.exit(0)
+            # Stop periodic builds.
+            if builder_event and builder_thread:
+                builder_event.set()
+                builder_thread.join()
         logging.info('Terminating server.')
+        sys.exit(0)
 
 def action_compass(project_dir):
     # This allows the user to update the configuration even while
