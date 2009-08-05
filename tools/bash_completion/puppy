@@ -1,0 +1,59 @@
+_puppy()
+{
+    local cur prev completions
+
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    COMMANDS='help build server clean purge rebuild'
+
+    PUPPY_OPTIONS='\
+      -h --help'
+
+    COMMON_OPTIONS='\
+      -h --help'
+
+    BUILD_OPTIONS=''
+
+    SERVER_OPTIONS='\
+      -a --address\
+      -p --port\
+      -s --server-only'
+
+    CLEAN_OPTIONS='\
+      -d --dry-run'
+
+    PURGE_OPTIONS=''
+
+    REBUILD_OPTIONS=''
+
+    HELP_OPTIONS=$COMMANDS
+
+    case "${prev}" in
+      build)
+        completions="$COMMON_OPTIONS $BUILD_OPTIONS"
+        ;;
+      clean)
+        completions="$COMMON_OPTIONS $CLEAN_OPTIONS"
+        ;;
+      server)
+        completions="$COMMON_OPTIONS $SERVER_OPTIONS"
+        ;;
+      rebuild)
+        completions="$COMMON_OPTIONS $REBUILD_OPTIONS"
+        ;;
+      purge)
+        completions="$COMMON_OPTIONS $PURGE_OPTIONS"
+        ;;
+      *)
+        completions="$COMMANDS $PUPPY_OPTIONS"
+        ;;
+    esac
+
+    COMPREPLY=( $( compgen -W "$completions" -- $cur ))
+    return 0
+}
+
+complete -F _puppy $filenames puppy
+
