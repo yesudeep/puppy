@@ -2,6 +2,16 @@ Introduction
 ============
 Puppy is a (driver) meta-framework for Python Web developers.
 
+Puppy uses many tools to make it easier for you to develop your Website.
+In the past you may have manually run minification tools, image optimizers,
+css generators, JavaScript unit testing tools, and other tools.
+
+Puppy automates all that for you.  For example, if you modify a CSS file
+in your code, puppy detects the change and builds a minified version
+alongside your untouched CSS.  And this happens transparently, so there
+is really no reason to go to the terminal and sit issuing commands.
+Sit back and let Puppy take over all that.
+
 Bugs or enhancements?
 ---------------------
 Please file them at the [issue tracker][issue_tracker].
@@ -70,8 +80,8 @@ To configure Ubuntu to use Java 1.6 you can use the `update-java-alternatives` c
 
 Please see `update-java-alternatives --help`.
 
-Using Puppy
-===========
+Using Puppy:
+============
 
 
 [pngcrush]: http://pmt.sourceforge.net/pngcrush/
