@@ -24,13 +24,6 @@ def generate(env):
 
     })
 
-    #env['BUILDERS']['Concatenate'] = Builder(action=concatenate)
-    #env['BUILDERS']['OptimizePNG'] = Builder(action=optimize_png)
-    #env['BUILDERS']['JsminMinify'] = Builder(action=jsmin_minify, emitter=jsmin_minify_emitter)
-    #env['BUILDERS']['YuiCompressorMinify'] = Builder(action=yui_compressor_minify, emitter=yui_compressor_minify_emitter)
-    #env['BUILDERS']['OptimizeJPEG'] = jpeg_builder
-    #env['BUILDERS']['OptimizeJPG'] = jpeg_builder
-
 def exists(env):
     return env.Detect('optipng') and env.Detect('jpegtran') and env.Detect('java')
 

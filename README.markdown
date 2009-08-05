@@ -42,22 +42,24 @@ Install the dependencies first:
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
 
-Clone the repository to a location on your disk:
+Clone the repository to a location on your disk and update submodules:
 
     $ git clone git://github.com/yesudeep/puppy.git ~/puppy
+    $ cd ~/puppy
+    $ git submodule init
+    $ git submodule update
 
-We'll refer to the installation directory as PUPPY_SDK_DIR henceforth.
-Add the PUPPY_SDK_DIR path to your PATH environment variable:
+We will refer to the installation directory as `PUPPY_SDK_DIR` henceforth.
+Add the `PUPPY_SDK_DIR` path to your `PATH` environment variable:
 
     $ PUPPY_SDK_DIR=/home/Google/puppy
     $ export PATH=${PUPPY_SDK_DIR}:${PATH}
 
-Alternatively, you can update your ~/.bashrc or ~/.profile as well.
+Alternatively, you can update your `~/.bashrc` or `~/.profile` as well.
 If you are a bash user and want bash-completion enabled for puppy,
 you can include this line in your bash profile.
 
-source ${PUPPY_SDK_DIR}/tools/bash_completion/puppy
-
+    source ${PUPPY_SDK_DIR}/tools/bash_completion/puppy
 
 Installation Notes:
 -------------------
