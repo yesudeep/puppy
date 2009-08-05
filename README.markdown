@@ -14,8 +14,11 @@ Bundled Software:
 * [JSMin][jsmin]
 * [Mozilla Rhino JavaScript Engine][rhino]
 
-Installation Requirements
--------------------------
+Installation:
+=============
+
+Requirements
+------------
 * Linux
 * [Java 1.6][java_jre]
 * [Ruby 1.8][ruby_lang]
@@ -29,7 +32,7 @@ Installation Requirements
 * [PNGCrush][pngcrush]
 
 Installing on Ubuntu:
-=====================
+---------------------
 
 Install the dependencies first:
 
@@ -39,15 +42,35 @@ Install the dependencies first:
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
 
+Clone the repository to a location on your disk:
 
-Notes:
-======
+    $ git clone git://github.com/yesudeep/puppy.git ~/puppy
+
+We'll refer to the installation directory as PUPPY_SDK_DIR henceforth.
+Add the PUPPY_SDK_DIR path to your PATH environment variable:
+
+    $ PUPPY_SDK_DIR=/home/Google/puppy
+    $ export PATH=${PUPPY_SDK_DIR}:${PATH}
+
+Alternatively, you can update your ~/.bashrc or ~/.profile as well.
+If you are a bash user and want bash-completion enabled for puppy,
+you can include this line in your bash profile.
+
+source ${PUPPY_SDK_DIR}/tools/bash_completion/puppy
+
+
+Installation Notes:
+-------------------
 Please make sure you have Java 1.6 JRE installed and setup for use.
 Some Linux systems come with OpenJDK versions of Java.  YUI Compressor
 fails to generate minified files when used with these versions of Java.
 To configure Ubuntu to use Java 1.6 you can use the `update-java-alternatives` command.
 
 Please see `update-java-alternatives --help`.
+
+Using Puppy
+===========
+
 
 [pngcrush]: http://pmt.sourceforge.net/pngcrush/
 [jpegtran]: http://jpegclub.org/
