@@ -2,15 +2,20 @@ Introduction
 ============
 Puppy is a (driver) meta-framework for Python Web developers.
 
-Puppy uses many tools to make it easier for you to develop your Website.
-In the past you may have manually run minification tools, image optimizers,
-css generators, JavaScript unit testing tools, and other tools.
+You've manually run minification tools, image optimizers,
+css generators, JavaScript unit testing tools, and other tools
+when deploying your Website, haven't you?
 
-Puppy automates all that for you.  For example, if you modify a CSS file
-in your code, puppy detects the change and builds a minified version
-alongside your untouched CSS.  And this happens transparently, so there
-is really no reason to go to the terminal and sit issuing commands.
-Sit back and let Puppy take over all that.
+Puppy automates all this for you.
+
+It uses many tools to make it easier for you to develop a production
+quality Website. For example, if you modify a CSS file in your code, puppy
+detects the change and builds a minified version alongside your
+untouched CSS _as you work_.  And this happens transparently in
+the background, so there is really no reason to issue build commands
+repeatedly.
+
+Sit back and let Puppy take over all that for you.
 
 Bugs or enhancements?
 ---------------------
