@@ -1,0 +1,11 @@
+application:
+    app_dir: app
+    framework: google-app-engine-python
+build:
+    media:
+        src_dir: media
+        dest_dir: "app/public"
+    watch:
+        paths: ["media"]
+        ignore_patterns: []
+

@@ -1,3 +1,268 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import config
+import sys
+import os
+import subcommand
+import subprocess
+import logging
+
+from util import remove_dir, execute_command, match_patterns, get_project_config
+from os.path import basename, join as path_join
+
+
+def check_tools():
+    error = False
+    try:
+        import yaml
+    except ImportError:
+        logging.error('Please install PyYAML.')
+        error = True
+    if error:
+        sys.exit(1)
+
+# Check whether all the required tools are available.
+check_tools()
+
+
+def action_run_server(project_dir):
+    project_config = get_project_config(project_dir)
+
+    app_dir = project_config.query('application.app_dir', config.DEFAULT_APP_DIR)
+    framework = project_config.query('application.framework', config.DEFAULT_FRAMEWORK)
+    server_host = project_config.query('development.server.host', config.DEFAULT_SERVER_HOST)
+    server_port = str(project_config.query('development.server.port', config.DEFAULT_SERVER_PORT))
+
+    if framework == config.FRAMEWORK_GAE_PYTHON:
+        execute_command('dev_appserver.py', ['-a', server_host, '-p', server_port, path_join(project_dir, app_dir)])
+    else:
+        logging.debug('not supported/implemented yet')
+
+def action_build_daemon(project_dir):
+    project_config = get_project_config(project_dir)
+
+    try:
+        import pyinotify
+        from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes, ProcessEvent
+        logging.debug('pyinotify available, watching directories now')
+
+        EVENTS_MASK = EventsCodes.ALL_FLAGS['IN_CREATE'] | EventsCodes.ALL_FLAGS['IN_DELETE'] | EventsCodes.ALL_FLAGS['IN_CLOSE_WRITE']
+
+        class Watcher(ProcessEvent):
+            def __init__(self, ignore_patterns):
+                self.ignore_patterns = set(ignore_patterns)
+
+            def process_IN_DELETE(self, event):
+                pass
+
+            def process_IN_CREATE(self, event):
+                pass
+
+            def process_IN_CLOSE_WRITE(self, event):
+                pathname = event.pathname
+                base_pathname = basename(pathname)
+                if match_patterns(base_pathname, ignore_patterns):
+                    # do nothing.
+                    logging.debug("Ignored CLOSE_WRITE for: %s" % pathname)
+                else:
+                    #logging.debug("Triggering build on CLOSE_WRITE for: %s" % pathname)
+                    action_compass(project_dir)
+                    action_build(project_dir)
+
+
+        watch = project_config.query('build.watch')
+        ignore_patterns = config.WATCH_IGNORE_PATTERNS
+        watch_paths = config.WATCH_PATHS
+        if watch:
+            watch_paths += watch.query('paths', [])
+            ignore_patterns += watch.query('ignore_patterns', [])
+
+        # Start watching.
+        watch_manager = WatchManager()
+        processor = Watcher(ignore_patterns)
+        notifier = ThreadedNotifier(watch_manager, processor)
+        notifier.start()
+        watches = []
+        for path in set(watch_paths):
+            logging.debug('Watching directory: %s' % path)
+            watches.append(watch_manager.add_watch(path, EVENTS_MASK, rec=True))
+
+    except ImportError:
+        # :(
+        logging.debug('pyinotify not found, scheduling periodic builds')
+
+    try:
+        logging.info('First build')
+        action_compass(project_dir)
+        action_build(project_dir)
+        action_run_server(project_dir)
+    except KeyboardInterrupt, msg:
+        logging.info('Terminating automatic builds.')
+        try:
+            import pyinotify
+            for watch in watches:
+                watch_manager.rm_watch(watch.values())
+            notifier.stop()
+        except ImportError:
+            pass
+        sys.exit(0)
+        logging.info('Terminating server.')
+
+def action_compass(project_dir):
+    # This allows the user to update the configuration even while
+    # the server/build daemon is running.  I know it's costly to read from
+    # the file every time this is called, but it's trade-off in
+    # favor of developer productivity.
+    #
+    # If you don't want the program to re-read the configuration file,
+    # memoize get_project_config.
+    project_config = get_project_config(project_dir)
+    compass_config_dir = project_config.query('build.media.src_dir', config.DEFAULT_MEDIA_SRC_DIR)
+    execute_command(config.COMPASS,
+            config.COMPASS_ARGS + ['-c',
+                path_join(compass_config_dir, config.COMPASS_CONFIG),
+                '-u',
+                compass_config_dir])
+
+def action_build(project_dir):
+    execute_command(config.SCONS, config.SCONS_BUILD_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH])
+
+def action_clean(project_dir):
+    execute_command(config.SCONS, config.SCONS_CLEAN_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH])
+
+
+def action_purge(project_dir):
+    project_config = get_project_config(project_dir)
+    dest_dir = project_config.query('build.media.dest_dir', config.DEFAULT_MEDIA_DEST_DIR)
+    if dest_dir:
+        logging.info('Deleting directory: %s' % dest_dir)
+        remove_dir(dest_dir)
+
+def action_rebuild(project_dir):
+    action_purge(project_dir)
+    action_build(project_dir)
+
+
+@subcommand.subcommand()
+def server(options, project_directory=None):
+    """Starts the development server and background builds.
+
+    Usage: server [options] [project_directory]
+
+    Options:
+
+    -h [--help]                 : displays this help
+    -p [--port]    port int     : server port (default: 8000)
+    -a [--address] address      : server address (default: 127.0.0.1)
+    -s [--server-only]          : disables automatic build
+    """
+    if options.help:
+        print server.__doc__
+        sys.exit(1)
+
+    if project_directory is None:
+        project_directory = os.getcwd()
+
+    project_config = get_project_config(project_directory)
+
+    if options.server_only:
+        action_run_server(project_directory)
+    else:
+        action_build_daemon(project_directory)
+
+@subcommand.subcommand()
+def create_project(options, name=None, template='google-app-engine-python'):
+    """Creates a project based on the given template.
+
+    Usage: create_project [options] name template
+
+    Options:
+
+    -h [--help]                 : displays this help
+    """
+    if options.help:
+        print create_project.__doc__
+        sys.exit(1)
+
+    print template, name
+
+@subcommand.subcommand()
+def build(options, project_directory=None):
+    """Builds a project.
+
+    Usage: build [project_directory]
+
+    Options:
+
+    -h [--help]     : displays this help
+    """
+    if options.help:
+        print build.__doc__
+        sys.exit(1)
+
+    if project_directory is None:
+        project_directory = os.getcwd()
+    action_build(project_directory)
+
+
+@subcommand.subcommand()
+def clean(options, project_directory=None):
+    """Cleans a project build.
+
+    Usage: clean [project_directory]
+
+    Options:
+
+    -h [--help]     : displays this help
+    """
+    if options.help:
+        print clean.__doc__
+        sys.exit(1)
+
+    if not project_directory:
+        project_directory = os.getcwd()
+    action_clean(project_directory)
+
+@subcommand.subcommand()
+def purge(options, project_directory=None):
+    """Cleans by removing the entire build.
+
+    Usage: purge [project_directory]
+
+    Options:
+
+    -h [--help]     : displays this help
+    """
+    if options.help:
+        print purge.__doc__
+        sys.exit(1)
+    if not project_directory:
+        project_directory = os.getcwd()
+    action_purge(project_directory)
+
+@subcommand.subcommand()
+def rebuild(options, project_directory=None):
+    """Cleans the previous build and rebuilds.
+
+    Usage: rebuild [project_directory]
+
+    Options:
+
+    -h [--help]     : displays this help
+    """
+    if options.help:
+        print rebuild.__doc__
+        sys.exit(1)
+
+    if not project_directory:
+        project_directory = os.getcwd()
+    action_rebuild(project_directory)
+
+
+def main(args):
+    subcommand.main()
+
+if __name__ == '__main__':
+    main(sys.argv)
+
