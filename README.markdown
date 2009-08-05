@@ -9,13 +9,29 @@ when deploying your Website, haven't you?
 Puppy automates all this for you.
 
 It uses many tools to make it easier for you to develop a production
-quality Website. For example, if you modify a CSS file in your code, puppy
+quality Website. For example, if you modify a CSS file in your code, Puppy
 detects the change and builds a minified version alongside your
-untouched CSS _as you work_.  And this happens transparently in
+untouched CSS **as you work**.  And this happens transparently in
 the background, so there is really no reason to issue build commands
 repeatedly.
 
 Sit back and let Puppy take over all that for you.
+
+What can Puppy do for you?
+--------------------------
+1. Minify CSS/JavaScript files.
+2. Optimize PNG/JPEG images.
+3. Convert SASS to optimized CSS.
+4. Run JavaScript unit tests in the background.
+5. Run your framework development server.
+6. Create project templates for your favorite framework.
+
+And, of course, *wag*.
+
+Do I have a dog?
+---------------
+Yep, I've got two lovely dogs.  One's a brown mongrel.
+The other one's a black Labbie.
 
 Bugs or enhancements?
 ---------------------
