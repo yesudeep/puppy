@@ -12,7 +12,7 @@ from fnmatch import fnmatch
 from os.path import join as path_join, basename
 from QueryDict import QueryDict
 
-def execute_command(program, arguments, echo=False):
+def execute_command(program, arguments, echo=True):
     if not arguments:
         arguments = []
     command = program + ' ' + ' '.join(arguments)
@@ -46,14 +46,14 @@ def minifiables(files, ignores=[], allow_patterns=['*.js', '*.css'], ignore_patt
 
 
 def get_project_config(project_dir=None):
-    if not project_dir:
-        project_dir = os.getcwd()
+    #if not project_dir:
+    #    project_dir = os.getcwd()
     config_path = path_join(project_dir, config.PROJECT_CONFIG_FILE_NAME)
     try:
         project_config = yaml.load(open(config_path, 'r').read())
         if not project_config:
-            logging.error("Project configuration file is empty -- %s" % config_path)
-            sys.exit(1)
+            logging.warning("Using defaults. Project configuration file is empty -- %s" % config_path)
+            project_config = {}
         return QueryDict(project_config)
     except IOError:
         if not os.path.exists(config_path):

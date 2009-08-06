@@ -35,7 +35,8 @@ def action_run_server(project_dir):
     server_port = str(project_config.query('development.server.port', config.DEFAULT_SERVER_PORT))
 
     if framework == config.FRAMEWORK_GAE_PYTHON:
-        execute_command('dev_appserver.py', ['-a', server_host, '-p', server_port, path_join(project_dir, app_dir)])
+        app_dir = path_join(project_dir, app_dir)
+        execute_command('dev_appserver.py', ['-a', server_host, '-p', server_port, app_dir])
     else:
         logging.debug('not supported/implemented yet')
 
@@ -144,7 +145,7 @@ def action_compass(project_dir):
     execute_command(config.COMPASS,
             config.COMPASS_ARGS + ['-c',
                 path_join(compass_config_dir, config.COMPASS_CONFIG),
-                '-u',
+                '--update',
                 compass_config_dir])
 
 def action_build(project_dir):
@@ -163,6 +164,7 @@ def action_purge(project_dir):
 
 def action_rebuild(project_dir):
     action_purge(project_dir)
+    action_compass(project_dir)
     action_build(project_dir)
 
 
@@ -225,8 +227,10 @@ def build(options, project_directory=None):
 
     if project_directory is None:
         project_directory = os.getcwd()
-    action_build(project_directory)
 
+    print project_directory
+    action_compass(project_directory)
+    action_build(project_directory)
 
 @subcommand.subcommand()
 def clean(options, project_directory=None):

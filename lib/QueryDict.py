@@ -98,7 +98,7 @@ class QueryDict(dict):
             else:
                 raise InvalidTokenError(query_string, "`%s' is an invalid token" % token_string)
 
-        return val
+        return val or default_value
 
 if __name__ == '__main__':
     lee = xrange(0, 40)
