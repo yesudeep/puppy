@@ -25,8 +25,8 @@ What can Puppy do for you?
 4. Run JavaScript unit tests in the background.
 5. Run your framework development server.
 6. Create project templates for your favorite framework.
-7. Compile-time templates that compile into Web templates that will be rendered at runtime.
-   (e.g., you can prefill your Web templates at *build-time* using Cheetah).
+7. Build-time templates that compile into Web templates that will be rendered at runtime.
+   (e.g., you can prefill your Web templates at *build-time* using Cheetah, compacting markup, etc.).
 
 And, of course, *wag*.
 
