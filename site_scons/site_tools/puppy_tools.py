@@ -15,7 +15,7 @@ from builders import yui_compressor_minify, \
 import pickle
 
 cheetahBuilder = Builder(generator=makeCheetahCommand, src_suffix='.tmpl', single_source = True)
-pickleBuilder = Builder(action = pickle_function, suffix='.pkl')
+pickleBuilder = Builder(action = Action(pickle_function, "Pickling template context '$TARGET'"), suffix='.pkl')
 
 def generate(env):
     env.Append(BUILDERS = {
