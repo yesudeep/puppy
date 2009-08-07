@@ -11,11 +11,15 @@ from builders import yui_compressor_minify, \
         optimize_png, \
         optimize_jpeg, \
         makeCheetahCommand, \
-        pickle_function
+        pickle_function, \
+        h_stitch_images, \
+        v_stitch_images
 import pickle
 
 cheetahBuilder = Builder(generator=makeCheetahCommand, src_suffix='.tmpl', single_source = True)
 pickleBuilder = Builder(action = Action(pickle_function, "Pickling template context '$TARGET'"), suffix='.pkl')
+h_stitch_images_builder = Builder(action=Action(h_stitch_images, "Stitch (horizontal) image '$TARGET' from '$SOURCES'"))
+v_stitch_images_builder = Builder(action=Action(v_stitch_images, "Stitch (vertical) image '$TARGET' from '$SOURCES'"))
 
 def generate(env):
     env.Append(BUILDERS = {
@@ -29,8 +33,12 @@ def generate(env):
 
         'Cheetah': cheetahBuilder,
         'Pickle': pickleBuilder,
+
+        'StitchImages': h_stitch_images_builder,
+        'HStitchImages': h_stitch_images_builder,
+        'VStitchImages': v_stitch_images_builder,
     })
 
 def exists(env):
-    return env.Detect('optipng') and env.Detect('jpegtran') and env.Detect('java') and env.Detect('cheetah')
+    return env.Detect('optipng') and env.Detect('jpegtran') and env.Detect('java') and env.Detect('cheetah') and env.Detect('montage')
 

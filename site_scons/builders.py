@@ -7,9 +7,12 @@ import shutil
 import subprocess
 import logging
 import jsmin
-
+from fnmatch import fnmatch
+import SCons.Builder
+import pickle
 from functools import partial
 from os.path import join as path_join, basename, dirname, abspath, realpath, splitext
+from util import is_png, is_jpeg
 
 # TODO:
 # Add jslint
@@ -26,8 +29,6 @@ YUI_COMPRESSOR_OPTIONS = ' '.join(['--preserve-semi'])
 
 jsmin_minifier = jsmin.JavascriptMinify()
 
-import SCons.Builder
-import pickle
 
 def makeCheetahCommand(target, source, env, for_signature):
     base = 'export PYTHONPATH="${TARGET.dir}" &&'
@@ -56,10 +57,32 @@ def optimize_jpeg(target, source, env):
     return None
 
 def optimize_png(target, source, env):
-    s = source[0]
-    t = target[0]
-    execute_command(' '.join(['optipng -q -o7', str(s), '-out', str(t)]))
+    s = str(source[0])
+    t = str(target[0])
+    if not t or t == s:
+        logging.warning('Optimizing in-place')
+        execute_command(' '.join(['optipng -q -o7', s]))
+    else:
+        execute_command(' '.join(['optipng -q -o7', s, '-out', t]))
     return None
+
+def stitch_images(target, source, env, orientation='horizontal'):
+    t = str(target[0])
+    sources = ' '.join([str(s) for s in source])
+    if orientation == 'vertical':
+        append = '-append'
+    else:
+        append = '+append'
+    execute_command(' '.join(['convert ', sources, append, t]))
+    if is_png(t):
+        execute_command(' '.join(['optipng -q -o7', t]))
+    return None
+
+def h_stitch_images(target, source, env):
+    stitch_images(target, source, env, 'horizontal')
+
+def v_stitch_images(target, source, env):
+    stitch_images(target, source, env, 'vertical')
 
 def suffix_emitter(target, source, env, suffix=''):
     target.pop()

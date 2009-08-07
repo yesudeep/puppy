@@ -44,6 +44,11 @@ def filter_files(files, ignores=[], allow_patterns=['*'], ignore_patterns=[]):
 def minifiables(files, ignores=[], allow_patterns=['*.js', '*.css'], ignore_patterns=['*.min.js', '*.min.css', '*-min.js', '*-min.css']):
     return filter_files(files, ignores, allow_patterns, ignore_patterns)
 
+def is_png(filename, patterns=['*.png', '*.PNG']):
+    return match_patterns(filename, patterns)
+
+def is_jpeg(filename, patterns=['*.jpg', '*.jpeg', '*.JPG', '*.JPEG']):
+    return match_patterns(filename, patterns)
 
 def get_project_config(project_dir=None):
     #if not project_dir:

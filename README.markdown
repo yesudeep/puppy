@@ -27,6 +27,7 @@ What can Puppy do for you?
 6. Create project templates for your favorite framework.
 7. Build-time templates that compile into Web templates that will be rendered at runtime.
    (e.g., you can prefill your Web templates at *build-time* using Cheetah, compact markup, etc.).
+8. Stitching multiple images together to create one image to reduce the number of requests.
 
 And, of course, *wag*.
 
@@ -64,6 +65,7 @@ Requirements
 * [JpegTran][jpegtran]
 * [PNGCrush][pngcrush]
 * [Cheetah][cheetah]
+* [ImageMagick][imagemagick]
 
 Installing on Ubuntu:
 ---------------------
@@ -71,7 +73,7 @@ Installing on Ubuntu:
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2 Cheetah
-    $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran
+    $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran imagemagick
 
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
@@ -128,5 +130,5 @@ Using Puppy:
 [pyyaml]: http://pyyaml.org/
 [subcommand]: http://github.com/anandology/subcommand/
 [cheetah]: http://www.cheetahtemplate.org/
-
+[imagemagick]: http://www.imagemagick.org/
 
