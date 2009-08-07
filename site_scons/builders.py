@@ -26,6 +26,25 @@ YUI_COMPRESSOR_OPTIONS = ' '.join(['--preserve-semi'])
 
 jsmin_minifier = jsmin.JavascriptMinify()
 
+import SCons.Builder
+import pickle
+
+def makeCheetahCommand(target, source, env, for_signature):
+    base = 'export PYTHONPATH="${TARGET.dir}" &&'
+    base += 'cheetah fill --stdout --nobackup '
+    sourceAndTarget = '$SOURCE >> $TARGET'
+    if 'PICKLE' in env:
+        env.Depends(target, env['PICKLE'])
+        return base + '--pickle $PICKLE ' + sourceAndTarget
+    else:
+        return base + sourceAndTarget
+
+def pickle_function(target, source, env):
+    for i in range(len(target)):
+        print(target[i])
+        pickle.dump(source[i].read(), open(str(target[i]), 'wb'))
+    return None
+
 def execute_command(command):
     #logging.info(command)
     subprocess.call(command, shell=True)

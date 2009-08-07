@@ -9,7 +9,13 @@ from builders import yui_compressor_minify, \
         jsmin_minify_emitter, \
         concatenate, \
         optimize_png, \
-        optimize_jpeg
+        optimize_jpeg, \
+        makeCheetahCommand, \
+        pickle_function
+import pickle
+
+cheetahBuilder = Builder(generator=makeCheetahCommand, src_suffix='.tmpl', single_source = True)
+pickleBuilder = Builder(action = pickle_function, suffix='.pkl')
 
 def generate(env):
     env.Append(BUILDERS = {
@@ -21,9 +27,10 @@ def generate(env):
         'OptimizeJPEG': env.Builder(action=Action(optimize_jpeg, "Optimizing JPEG '$TARGET' from '$SOURCE'")),
         'OptimizeJPG': env.Builder(action=Action(optimize_jpeg, "Optimizing JPEG '$TARGET' from '$SOURCE'")),
 
-
+        'Cheetah': cheetahBuilder,
+        'Pickle': pickleBuilder,
     })
 
 def exists(env):
-    return env.Detect('optipng') and env.Detect('jpegtran') and env.Detect('java')
+    return env.Detect('optipng') and env.Detect('jpegtran') and env.Detect('java') and env.Detect('cheetah')
 

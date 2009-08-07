@@ -25,6 +25,8 @@ What can Puppy do for you?
 4. Run JavaScript unit tests in the background.
 5. Run your framework development server.
 6. Create project templates for your favorite framework.
+7. Compile-time templates that compile into Web templates that will be rendered at runtime.
+   (e.g., you can prefill your Web templates at *build-time* using Cheetah).
 
 And, of course, *wag*.
 
@@ -61,7 +63,7 @@ Requirements
 * [OptiPNG][optipng]
 * [JpegTran][jpegtran]
 * [PNGCrush][pngcrush]
-* [Mako][mako]
+* [Cheetah][cheetah]
 
 Installing on Ubuntu:
 ---------------------
@@ -125,5 +127,6 @@ Using Puppy:
 [pyinotify]: http://trac.dbzteam.org/pyinotify
 [pyyaml]: http://pyyaml.org/
 [subcommand]: http://github.com/anandology/subcommand/
-[mako]: http://www.makotemplates.org/
+[cheetah]: http://www.cheetahtemplate.org/
+
 
