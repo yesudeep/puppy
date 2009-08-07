@@ -75,7 +75,7 @@ Installing on Ubuntu:
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2 Cheetah
-    $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran imagemagick
+    $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran imagemagick scons
 
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
