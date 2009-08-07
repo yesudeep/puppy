@@ -26,7 +26,7 @@ What can Puppy do for you?
 5. Run your framework development server.
 6. Create project templates for your favorite framework.
 7. Build-time templates that compile into Web templates that will be rendered at runtime.
-   (e.g., you can prefill your Web templates at *build-time* using Cheetah, compacting markup, etc.).
+   (e.g., you can prefill your Web templates at *build-time* using Cheetah, compact markup, etc.).
 
 And, of course, *wag*.
 
