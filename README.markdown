@@ -61,13 +61,14 @@ Requirements
 * [OptiPNG][optipng]
 * [JpegTran][jpegtran]
 * [PNGCrush][pngcrush]
+* [Mako][mako]
 
 Installing on Ubuntu:
 ---------------------
 
 Install the dependencies first:
 
-    $ sudo easy_install pyinotify pyyaml Jinja2
+    $ sudo easy_install pyinotify pyyaml Jinja2 Mako
     $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran
 
 Follow the [installation instructions][compass_installation] for Compass
@@ -124,4 +125,5 @@ Using Puppy:
 [pyinotify]: http://trac.dbzteam.org/pyinotify
 [pyyaml]: http://pyyaml.org/
 [subcommand]: http://github.com/anandology/subcommand/
+[mako]: http://www.makotemplates.org/
 
