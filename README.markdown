@@ -60,12 +60,14 @@ Requirements
 * [pyinotify][pyinotify]
 * [PyYAML][pyyaml]
 * [Compass][compass] and the [Compass 960 plugin][compass_960]
+* [SCons][scons]
 * [Jinja2][jinja2]
 * [OptiPNG][optipng]
 * [JpegTran][jpegtran]
 * [PNGCrush][pngcrush]
 * [Cheetah][cheetah]
 * [ImageMagick][imagemagick]
+
 
 Installing on Ubuntu:
 ---------------------
@@ -131,4 +133,5 @@ Using Puppy:
 [subcommand]: http://github.com/anandology/subcommand/
 [cheetah]: http://www.cheetahtemplate.org/
 [imagemagick]: http://www.imagemagick.org/
+[scons]: http://www.scons.org
 
