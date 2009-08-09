@@ -13,7 +13,8 @@ from builders import yui_compressor_minify, \
         makeCheetahCommand, \
         pickle_function, \
         h_stitch_images, \
-        v_stitch_images
+        v_stitch_images, \
+        html_minify
 import pickle
 
 cheetahBuilder = Builder(generator=makeCheetahCommand, src_suffix='.tmpl', single_source = True)
@@ -37,6 +38,8 @@ def generate(env):
         'StitchImages': h_stitch_images_builder,
         'HStitchImages': h_stitch_images_builder,
         'VStitchImages': v_stitch_images_builder,
+
+        'HTMLMinify': env.Builder(action=Action(html_minify, "Minifying (HTML) '$SOURCE'")),
     })
 
 def exists(env):

@@ -285,6 +285,18 @@ def rebuild(options, project_directory=None):
         project_directory = os.getcwd()
     action_rebuild(project_directory)
 
+@subcommand.subcommand()
+def update_submodules(options, project_directory=None):
+    """Fetches git submodules deeply nested within the project directory.
+
+    Usage: update-submodules [project_directory]
+
+    Options:
+
+    -h [--help]     : displays this help
+    """
+    pass
+
 
 def main(args):
     subcommand.main()

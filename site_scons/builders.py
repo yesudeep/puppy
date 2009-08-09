@@ -23,6 +23,7 @@ SDK_DIR_PATH = dirname(DIR_PATH)
 
 YUI_COMPRESSOR_MINIFIED_SUFFIX = '-min'
 JSMIN_MINIFIED_SUFFIX = '-jsmin'
+HTML_MINIFIED_SUFFIX = '-min'
 
 YUI_COMPRESSOR_JAR = path_join(SDK_DIR_PATH, 'tools', 'yuicompressor', 'yuicompressor.jar')
 YUI_COMPRESSOR_OPTIONS = ' '.join(['--preserve-semi'])
@@ -30,10 +31,14 @@ YUI_COMPRESSOR_OPTIONS = ' '.join(['--preserve-semi'])
 jsmin_minifier = jsmin.JavascriptMinify()
 
 
+
 def makeCheetahCommand(target, source, env, for_signature):
     base = 'export PYTHONPATH="${TARGET.dir}" &&'
     base += 'cheetah fill --stdout --nobackup '
     sourceAndTarget = '$SOURCE >> $TARGET'
+
+    #in_place_html_compaction('$TARGET')
+
     if 'PICKLE' in env:
         env.Depends(target, env['PICKLE'])
         return base + '--pickle $PICKLE ' + sourceAndTarget
@@ -94,6 +99,28 @@ def suffix_emitter(target, source, env, suffix=''):
 
 yui_compressor_minify_emitter = partial(suffix_emitter, suffix=YUI_COMPRESSOR_MINIFIED_SUFFIX)
 jsmin_minify_emitter = partial(suffix_emitter, suffix=JSMIN_MINIFIED_SUFFIX)
+
+def __html_minify(in_filename, out_filename):
+    try:
+        infile = open(in_filename, 'r')
+        lines = infile.read().split('\n')
+        content = ''.join([line.strip() for line in lines])
+        infile.close()
+
+        outfile = open(out_filename, 'w')
+        outfile.write(content)
+        outfile.close()
+    except IOError, m:
+        raise IOError, m
+
+def html_minify(target, source, env):
+    for s in source:
+        s = str(s)
+        #filename, extension = splitext(s)
+        #out_filename = filename + HTML_MINIFIED_SUFFIX + extension
+        out_filename = s
+        __html_minify(s, out_filename)
+    return None
 
 def yui_compressor_minify(target, source, env):
     for s in source:
