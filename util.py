@@ -41,7 +41,7 @@ def filter_files(files, ignores=[], allow_patterns=['*'], ignore_patterns=[]):
             result.append(f)
     return result
 
-def minifiables(files, ignores=[], allow_patterns=['*.js', '*.css'], ignore_patterns=['*.min.js', '*.min.css', '*-min.js', '*-min.css']):
+def minifiables(files, ignores=[], allow_patterns=['*.js', '*.css'], ignore_patterns=['*.min.js', '*.min.css', '*-min.js', '*-min.css', '*.font.js']):
     return filter_files(files, ignores, allow_patterns, ignore_patterns)
 
 def is_png(filename, patterns=['*.png', '*.PNG']):
