@@ -75,7 +75,8 @@ Installing on Ubuntu:
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2 Cheetah
-    $ sudo aptitude install sun-java6-jre optipng pngcrush jpegtran imagemagick scons
+    $ sudo aptitude install git-core git-email git-load-dirs git-doc \
+        sun-java6-jre optipng pngcrush libjpeg-progs imagemagick scons
 
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
@@ -108,9 +109,24 @@ To configure Ubuntu to use Java 1.6 you can use the `update-java-alternatives` c
 
 Please see `update-java-alternatives --help`.
 
+Typing the following command should not show you "OpenJDK" in the output:
+
+    $ java -version
+    java version "1.6.0_14"
+    Java(TM) SE Runtime Environment (build 1.6.0_14-b08)
+    Java HotSpot(TM) 64-Bit Server VM (build 14.0-b16, mixed mode)
+
+Generally, you would want to do something along the lines of:
+
+    $ update-java-alternatives --list
+    java-6-openjdk 1061 /usr/lib/jvm/java-6-openjdk
+    java-6-sun 63 /usr/lib/jvm/java-6-sun
+    $ sudo update-java-alternatives --set java-6-sun
+
+
 Using Puppy:
 ============
-
+Yet to be written.
 
 [pngcrush]: http://pmt.sourceforge.net/pngcrush/
 [jpegtran]: http://jpegclub.org/
