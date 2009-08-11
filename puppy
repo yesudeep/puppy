@@ -47,8 +47,23 @@ def action_build_daemon(project_dir):
         import pyinotify
         from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes, ProcessEvent
         logging.debug('pyinotify available, watching directories now')
+        from Queue import Queue
+        from threading import Thread
+        import time
 
         EVENTS_MASK = EventsCodes.ALL_FLAGS['IN_CREATE'] | EventsCodes.ALL_FLAGS['IN_DELETE'] | EventsCodes.ALL_FLAGS['IN_CLOSE_WRITE']
+
+        builder_queue = Queue()
+        def process_build_queue(queue):
+            while True:
+                b = queue.get()
+                logging.info('building')
+                action_compass(project_dir)
+                action_build(project_dir)
+                queue.task_done()
+        build_worker = Thread(target=process_build_queue, args=(builder_queue,))
+        build_worker.setDaemon(True)
+        build_worker.start()
 
         class Watcher(ProcessEvent):
             def __init__(self, ignore_patterns):
@@ -68,8 +83,10 @@ def action_build_daemon(project_dir):
                     logging.debug("Ignored CLOSE_WRITE for: %s" % pathname)
                 else:
                     #logging.debug("Triggering build on CLOSE_WRITE for: %s" % pathname)
-                    action_compass(project_dir)
-                    action_build(project_dir)
+                    if builder_queue.empty():
+                        # We don't want scons to check and do extra builds if
+                        # there's already a build scheduled in the builder queue.
+                        builder_queue.put('build')
 
 
         watch = project_config.query('build.watch')
@@ -124,6 +141,7 @@ def action_build_daemon(project_dir):
             for watch in watches:
                 watch_manager.rm_watch(watch.values())
             notifier.stop()
+            builder_queue.join()
         except ImportError:
             # Stop periodic builds.
             if builder_event and builder_thread:
