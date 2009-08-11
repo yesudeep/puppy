@@ -28,6 +28,9 @@ HTML_MINIFIED_SUFFIX = '-min'
 YUI_COMPRESSOR_JAR = path_join(SDK_DIR_PATH, 'tools', 'yuicompressor', 'yuicompressor.jar')
 YUI_COMPRESSOR_OPTIONS = ' '.join(['--preserve-semi'])
 
+HTML_MINIFIER_EXECUTABLE = path_join(SDK_DIR_PATH, 'tools', 'html_minify', 'html_minify.py')
+HTML_MINIFIER = 'python ' + HTML_MINIFIER_EXECUTABLE
+
 jsmin_minifier = jsmin.JavascriptMinify()
 
 
@@ -100,26 +103,14 @@ def suffix_emitter(target, source, env, suffix=''):
 yui_compressor_minify_emitter = partial(suffix_emitter, suffix=YUI_COMPRESSOR_MINIFIED_SUFFIX)
 jsmin_minify_emitter = partial(suffix_emitter, suffix=JSMIN_MINIFIED_SUFFIX)
 
-def __html_minify(in_filename, out_filename):
-    try:
-        infile = open(in_filename, 'r')
-        lines = infile.read().split('\n')
-        content = ''.join([line.strip() for line in lines])
-        infile.close()
-
-        outfile = open(out_filename, 'w')
-        outfile.write(content)
-        outfile.close()
-    except IOError, m:
-        raise IOError, m
-
 def html_minify(target, source, env):
-    for s in source:
-        s = str(s)
-        #filename, extension = splitext(s)
-        #out_filename = filename + HTML_MINIFIED_SUFFIX + extension
-        out_filename = s
-        __html_minify(s, out_filename)
+    s = str(source[0])
+    t = str(target[0])
+    if env.get('HTML_MINIFY_INLINE', True):
+        command = ' '.join([HTML_MINIFIER, '-j', '-o', t, s])
+    else:
+        command = ' '.join([HTML_MINIFIER, '-o', t, s])
+    execute_command(command)
     return None
 
 def yui_compressor_minify(target, source, env):

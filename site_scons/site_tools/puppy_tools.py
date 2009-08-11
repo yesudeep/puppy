@@ -39,7 +39,7 @@ def generate(env):
         'HStitchImages': h_stitch_images_builder,
         'VStitchImages': v_stitch_images_builder,
 
-        'HTMLMinify': env.Builder(action=Action(html_minify, "Minifying (HTML) '$SOURCE'")),
+        'HTMLMinify': env.Builder(action=Action(html_minify, "Minifying (HTML) to '$TARGET' from '$SOURCE'")),
     })
 
 def exists(env):
