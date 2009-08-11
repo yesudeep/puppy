@@ -141,7 +141,8 @@ def action_compass(project_dir):
     # If you don't want the program to re-read the configuration file,
     # memoize get_project_config.
     project_config = get_project_config(project_dir)
-    compass_config_dir = project_config.query('build.media.src_dir', config.DEFAULT_MEDIA_SRC_DIR)
+    app_dir = project_config.query('application.app_dir', config.DEFAULT_APP_DIR)
+    compass_config_dir = project_config.query('build.media.src_dir', path_join(app_dir, config.DEFAULT_MEDIA_SRC_DIR))
     execute_command(config.COMPASS,
             config.COMPASS_ARGS + ['-c',
                 path_join(compass_config_dir, config.COMPASS_CONFIG),
@@ -157,8 +158,14 @@ def action_clean(project_dir):
 
 def action_purge(project_dir):
     project_config = get_project_config(project_dir)
-    dest_dir = project_config.query('build.media.dest_dir', config.DEFAULT_MEDIA_DEST_DIR)
-    if dest_dir:
+    app_dir = project_config.query('application.app_dir', config.DEFAULT_APP_DIR)
+    media_dest_dir = project_config.query('build.media.dest_dir', path_join(app_dir, config.DEFAULT_MEDIA_DEST_DIR))
+    templates_dest_dir = project_config.query('build.templates.dest_dir', path_join(app_dir, config.DEFAULT_TEMPLATES_DEST_DIR))
+    dest_dirs = [
+        media_dest_dir,
+        templates_dest_dir,
+    ]
+    for dest_dir in dest_dirs:
         logging.info('Deleting directory: %s' % dest_dir)
         remove_dir(dest_dir)
 
