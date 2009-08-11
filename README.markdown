@@ -51,11 +51,11 @@ Bundled Software:
 Installation Requirements
 -------------------------
 
-* Linux
+* Linux/Mac OS X
 * [Java 1.6][java_jre]
 * [Ruby 1.8][ruby_lang]
 * [Python 2.5 or Python 2.6][python_lang]
-* [pyinotify][pyinotify]
+* [pyinotify][pyinotify] (Linux only)
 * [PyYAML][pyyaml]
 * [Compass][compass] and the [Compass 960 plugin][compass_960]
 * [SCons][scons]
@@ -162,14 +162,14 @@ All set.
 File monitoring on Mac OS X:
 ----------------------------
 On Linux, Puppy uses inotify (pyinotify) to monitor the file system for
-changes so it will build only when a watched file changes.  While
+changes so it will perform a build only when a watched file changes.  While
 Mac OS X has a similar API called FSEvents available, it has not yet been
 integrated.  On platforms other than Linux, Puppy polls your project
 directory for changes.  This may change in the future.
 
 
 Common to UNIX platforms:
--------------------------
+=========================
 Follow the [installation instructions][compass_installation] for Compass
 and the Compass 960 plugin.
 
