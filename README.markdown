@@ -48,11 +48,9 @@ Bundled Software:
 * [JSMin][jsmin]
 * [Mozilla Rhino JavaScript Engine][rhino]
 
-Installation:
-=============
+Installation Requirements
+-------------------------
 
-Requirements
-------------
 * Linux
 * [Java 1.6][java_jre]
 * [Ruby 1.8][ruby_lang]
@@ -70,7 +68,7 @@ Requirements
 
 
 Installing on Ubuntu:
----------------------
+=====================
 
 Install the dependencies first:
 
@@ -78,30 +76,8 @@ Install the dependencies first:
     $ sudo aptitude install git-core git-email git-load-dirs git-doc \
         sun-java6-jre optipng pngcrush libjpeg-progs imagemagick scons
 
-Follow the [installation instructions][compass_installation] for Compass
-and the Compass 960 plugin.
-
-Clone the repository to a location on your disk and update submodules:
-
-    $ git clone git://github.com/yesudeep/puppy.git ~/puppy
-    $ cd ~/puppy
-    $ git submodule init
-    $ git submodule update
-
-We will refer to the installation directory as `PUPPY_SDK_DIR` henceforth.
-Add the `PUPPY_SDK_DIR` path to your `PATH` environment variable:
-
-    $ PUPPY_SDK_DIR=/home/Google/puppy
-    $ export PATH=${PUPPY_SDK_DIR}:${PATH}
-
-Alternatively, you can update your `~/.bashrc` or `~/.profile` as well.
-If you are a bash user and want bash-completion enabled for puppy,
-you can include this line in your bash profile.
-
-    source ${PUPPY_SDK_DIR}/tools/bash_completion/puppy
-
-Installation Notes:
--------------------
+Java Installation Notes:
+------------------------
 Please make sure you have Java 1.6 JRE installed and setup for use.
 Some Linux systems come with OpenJDK versions of Java.  YUI Compressor
 fails to generate minified files when used with these versions of Java.
@@ -123,6 +99,98 @@ Generally, you would want to do something along the lines of:
     java-6-sun 63 /usr/lib/jvm/java-6-sun
     $ sudo update-java-alternatives --set java-6-sun
 
+Installing on Mac OS X:
+=======================
+
+Please check the version of Java installed on your machine before proceeding.
+You need at least Java Runtime Environment 1.5.  Here's how to check for
+the version on OS X 10.5 or higher.  Open Terminal.app and then type:
+
+    $ java -version
+    java version "1.5.0_19"
+    Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_19-b02-304)
+    Java HotSpot(TM) Client VM (build 1.5.0_19-137, mixed mode, sharing)
+
+Also make sure you have python2.5 installed if you are using google_appengine.
+As of today, the Google AppEngine SDK does not work with Python 2.6 or higher.
+
+You will also need git, MacPorts, and XCode installed to proceed.
+Please follow the installation instructions for [Git Mac OS X Installer][git_macosx]
+and [MacPorts][macports].
+
+Install all the dependencies:
+-----------------------------
+    $ sudo easy_install pyyaml Jinja2 Cheetah SCons
+    $ sudo port install pngcrush optipng ImageMagick
+
+Troubleshooting SCons installation:
+-----------------------------------
+If installing SCons succeeded, but you are unable to run SCons and get
+an error along the lines of "ImportError: No module name SCons.Script",
+you may need to add lines similar to the following to your ~/.profile:
+
+    # Python 2.5
+    export SCONS_LIB_DIR=/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/scons-1.2.0-py2.5.egg/scons-1.2.0
+
+    # Python 2.6
+    export SCONS_LIB_DIR=/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/scons-1.2.0-py2.6.egg/scons-1.2.0
+
+SCons should now work.  You can check by issuing `scons --version` which
+will show you something like:
+
+    SCons by Steven Knight et al.:
+	script: v1.2.0.r3842, 2008/12/20 22:59:52, by scons on scons-dev
+	engine: v1.2.0.r3842, 2008/12/20 22:59:52, by scons on scons-dev
+    Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 The SCons Foundation
+
+Installing jpegtran:
+--------------------
+    $ curl http://ijg.org/files/jpegsrc.v7.tar.gz > /tmp/libjpeg.tar.gz    $ tar zxvf /tmp/libjpeg.tar.gz
+    $ cd /tmp/jpeg-7
+    $ ./configure
+    $ make
+    $ sudo make install
+
+Checking whether jpegtran has been correctly installed:
+
+    $ jpegtran -v
+    Independent JPEG Group's JPEGTRAN, version 7  27-Jun-2009
+    Copyright (C) 2009, Thomas G. Lane, Guido Vollbeding
+
+All set.
+
+File monitoring on Mac OS X:
+----------------------------
+On Linux, Puppy uses inotify (pyinotify) to monitor the file system for
+changes so it will build only when a watched file changes.  While
+Mac OS X has a similar API called FSEvents available, it has not yet been
+integrated.  On platforms other than Linux, Puppy polls your project
+directory for changes.  This may change in the future.
+
+
+Common to UNIX platforms:
+-------------------------
+Follow the [installation instructions][compass_installation] for Compass
+and the Compass 960 plugin.
+
+Clone the repository to a location on your disk and update submodules:
+
+    $ git clone git://github.com/yesudeep/puppy.git ~/puppy
+    $ cd ~/puppy
+    $ git submodule init
+    $ git submodule update
+
+We will refer to the installation directory as `PUPPY_SDK_DIR` henceforth.
+Add the `PUPPY_SDK_DIR` path to your `PATH` environment variable:
+
+    $ PUPPY_SDK_DIR=/home/Google/puppy
+    $ export PATH=${PUPPY_SDK_DIR}:${PATH}
+
+Alternatively, you can update your `~/.bashrc` or `~/.profile` as well.
+If you are a bash user and want bash-completion enabled for puppy,
+you can include this line in your bash profile.
+
+    source ${PUPPY_SDK_DIR}/tools/bash_completion/puppy
 
 Using Puppy:
 ============
@@ -150,4 +218,6 @@ Yet to be written.
 [cheetah]: http://www.cheetahtemplate.org/
 [imagemagick]: http://www.imagemagick.org/
 [scons]: http://www.scons.org
+[git_macosx]: http://code.google.com/p/git-osx-installer/
+[macports]: http://www.macports.org/
 
