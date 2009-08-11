@@ -126,8 +126,8 @@ Install all the dependencies:
 Troubleshooting SCons installation:
 -----------------------------------
 If installing SCons succeeded, but you are unable to run SCons and get
-an error along the lines of "ImportError: No module name SCons.Script",
-you may need to add lines similar to the following to your ~/.profile:
+an error along the lines of `ImportError: No module name SCons.Script`,
+you may need to add lines similar to the following to your `~/.profile`:
 
     # Python 2.5
     export SCONS_LIB_DIR=/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/scons-1.2.0-py2.5.egg/scons-1.2.0
