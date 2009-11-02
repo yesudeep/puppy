@@ -111,23 +111,44 @@ the version on OS X 10.5 or higher.  Open Terminal.app and then type:
     Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_19-b02-304)
     Java HotSpot(TM) Client VM (build 1.5.0_19-137, mixed mode, sharing)
 
+Snow Leopard should show something similar to:
+
+    $ java -version
+    java version "1.6.0_15"
+    Java(TM) SE Runtime Environment (build 1.6.0_15-b03-219)
+    Java HotSpot(TM) 64-Bit Server VM (build 14.1-b02-90, mixed mode)
+
 Also make sure you have python2.5 installed if you are using google_appengine.
 As of today, the Google AppEngine SDK does not work with Python 2.6 or higher.
 
 You will also need git, MacPorts, and XCode installed to proceed.
-Please follow the installation instructions for [Git Mac OS X Installer][git_macosx]
-and [MacPorts][macports].
+Please follow the installation instructions for [Git Mac OS X Installer][git_macosx],
+[MacPorts][macports], and [XCode][xcode].
 
 Install all the dependencies:
 -----------------------------
-    $ sudo easy_install pyyaml Jinja2 Cheetah SCons
+    $ sudo easy_install pyyaml Jinja2 SCons Cheetah
     $ sudo port install pngcrush optipng ImageMagick
+
+Troubleshooting the Cheetah installation:
+-----------------------------------------
+If you had trouble installing Cheetah on Mac OS X for example, you can [download
+the gzipped source tarball][cheetah], and installing using the instructions given in that file.
 
 Troubleshooting SCons installation:
 -----------------------------------
 If installing SCons succeeded, but you are unable to run SCons and get
 an error along the lines of `ImportError: No module name SCons.Script`,
-you may need to add lines similar to the following to your `~/.profile`:
+you may need to add lines similar to the following to your `~/.profile`
+in Mac OS X 10.6 (Snow Leopard):
+
+    # Python 2.5
+    export SCONS_LIB_DIR=/Library/Python/2.5/site-packages/scons-1.2.0-py2.5.egg/scons-1.2.0
+
+    # Python 2.6
+    export SCONS_LIB_DIR=/Library/Python/2.6/site-packages/scons-1.2.0-py2.6.egg/scons-1.2.0
+
+If you're using Mac OS X 10.5:
 
     # Python 2.5
     export SCONS_LIB_DIR=/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/site-packages/scons-1.2.0-py2.5.egg/scons-1.2.0
@@ -220,4 +241,5 @@ Yet to be written.
 [scons]: http://www.scons.org
 [git_macosx]: http://code.google.com/p/git-osx-installer/
 [macports]: http://www.macports.org/
+[xcode]: http://developer.apple.com/TOOLS/Xcode/
 
