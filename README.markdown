@@ -121,9 +121,7 @@ Snow Leopard should show something similar to:
 Also make sure you have python2.5 installed if you are using google_appengine.
 As of today, the Google AppEngine SDK does not work with Python 2.6 or higher.
 
-You will also need git, MacPorts, and XCode installed to proceed.
-Please follow the installation instructions for [Git Mac OS X Installer][git_macosx],
-[MacPorts][macports], and [XCode][xcode].
+You will also need [git][git_macosx], [MacPorts][macports], and [XCode][xcode] installed to proceed.
 
 Install all the dependencies:
 -----------------------------
