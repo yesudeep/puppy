@@ -75,16 +75,26 @@ version of Python so please also install the python-dev package:
 
     $ sudo aptitude install python-setuptools python-dev build-essentials automake autoconf libtool intltool
 
-If you're using a fairly recent version of Ubuntu Linux, Python 2.5 might
-not be installed already.  You can install it using:
-
-    $ sudo aptitude install python2.5 python2.5-dev python2.5-setuptools
 
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2 Cheetah
     $ sudo aptitude install git-core git-email git-load-dirs git-doc \
         sun-java6-jre optipng pngcrush libjpeg-progs imagemagick scons
+
+Python 2.5 Notes:
+-----------------
+
+If you're using a fairly recent version of Ubuntu Linux, Python 2.5 might
+not be installed already.  You can install it using:
+
+    $ sudo aptitude install python2.5 python2.5-dev python2.5-setuptools
+
+When you're using a web framework that works only with Python 2.5
+you might need to install one or more of the easy_install packages in addition
+to the above like so:
+
+    $ sudo easy_install-2.5 Jinja2
 
 Java Installation Notes:
 ------------------------
