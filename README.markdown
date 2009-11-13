@@ -70,15 +70,15 @@ Installation Requirements
 Installing on Ubuntu:
 =====================
 
+You will need the python development packages for your system 
+version of Python so please also install the python-dev package:
+
+    $ sudo aptitude install python-setuptools python-dev build-essentials automake autoconf libtool intltool
+
 If you're using a fairly recent version of Ubuntu Linux, Python 2.5 might
 not be installed already.  You can install it using:
 
-    $ sudo aptitude install python2.5 python2.5-dev
-
-You will also need the python development packages for your system 
-version of Python so please also install the python-dev package:
-
-    $ sudo aptitude install python-dev build-essentials automake autoconf libtool intltool
+    $ sudo aptitude install python2.5 python2.5-dev python2.5-setuptools
 
 Install the dependencies first:
 
