@@ -70,6 +70,16 @@ Installation Requirements
 Installing on Ubuntu:
 =====================
 
+If you're using a fairly recent version of Ubuntu Linux, Python 2.5 might
+not be installed already.  You can install it using:
+
+    $ sudo aptitude install python2.5 python2.5-dev
+
+You will also need the python development packages for your system 
+version of Python so please also install the python-dev package:
+
+    $ sudo aptitude install python-dev
+
 Install the dependencies first:
 
     $ sudo easy_install pyinotify pyyaml Jinja2 Cheetah
