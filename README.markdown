@@ -112,6 +112,12 @@ Typing the following command should not show you "OpenJDK" in the output:
     Java(TM) SE Runtime Environment (build 1.6.0_14-b08)
     Java HotSpot(TM) 64-Bit Server VM (build 14.0-b16, mixed mode)
 
+    $ java -version 
+    java version "1.6.0_15"
+    Java(TM) SE Runtime Environment (build 1.6.0_15-b03)
+    Java HotSpot(TM) 64-Bit Server VM (build 14.1-b02, mixed mode)
+
+
 Generally, you would want to do something along the lines of:
 
     $ update-java-alternatives --list
