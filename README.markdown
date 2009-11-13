@@ -78,7 +78,7 @@ not be installed already.  You can install it using:
 You will also need the python development packages for your system 
 version of Python so please also install the python-dev package:
 
-    $ sudo aptitude install python-dev
+    $ sudo aptitude install python-dev build-essentials automake autoconf libtool intltool
 
 Install the dependencies first:
 
