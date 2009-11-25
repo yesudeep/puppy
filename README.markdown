@@ -73,7 +73,7 @@ Installing on Ubuntu:
 You will need the python development packages for your system 
 version of Python so please also install the python-dev package:
 
-    $ sudo aptitude install python-setuptools python-dev build-essentials automake autoconf libtool intltool
+    $ sudo aptitude install python-setuptools python-dev build-essential automake autoconf libtool intltool
 
 
 Install the dependencies first:
