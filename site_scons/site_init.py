@@ -10,6 +10,6 @@ SDK_DIR_PATH = dirname(DIR_PATH)
 EXTRA_LIB_PATH = [
     path_join(SDK_DIR_PATH),
     path_join(SDK_DIR_PATH, 'lib'),
+    path_join(SDK_DIR_PATH, 'lib', 'appengine'),
 ]
 sys.path = EXTRA_LIB_PATH + sys.path
-

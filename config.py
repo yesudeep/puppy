@@ -15,6 +15,7 @@ LIB_DIR_PATH = path_join(SDK_DIR_PATH, 'lib')
 EXTRA_LIB_PATH = [
     LIB_DIR_PATH,
     path_join(LIB_DIR_PATH, 'subcommand'),
+    path_join(LIB_DIR_PATH, 'appengine'),
 ]
 sys.path = EXTRA_LIB_PATH + sys.path
 
