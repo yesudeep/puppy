@@ -34,7 +34,6 @@ HTML_MINIFIER = 'python ' + HTML_MINIFIER_EXECUTABLE
 jsmin_minifier = jsmin.JavascriptMinify()
 
 
-
 def makeCheetahCommand(target, source, env, for_signature):
     base = 'export PYTHONPATH="${TARGET.dir}" &&'
     base += 'cheetah fill --stdout --nobackup '
@@ -124,6 +123,21 @@ def yui_compressor_minify(target, source, env):
             filename + YUI_COMPRESSOR_MINIFIED_SUFFIX + extension]))
     return None
 
+def jinja2_compile(target, source, env):
+    from jinja2 import Environment
+    from gaefy.jinja2.compiler import compile_file
+
+    s = str(source[0])
+    t = str(target[0])
+    base_dir = env.get('jinja2_base_dir', '')
+    encoding = env.get('jinja2_encoding', 'utf-8')
+    as_module = env.get('jinja2_as_module', False)
+    filters = env.get('jinja2_filters', {})
+    jinja_env = Environment()
+    jinja_env.filters.update(filters)
+    compile_file(jinja_env, s, t, encoding=encoding, base_dir=base_dir, as_module=as_module)
+    return None
+
 def jsmin_minify(target, source, env):
     for s in source:
         s = str(s)
@@ -133,6 +147,7 @@ def jsmin_minify(target, source, env):
         jsmin_minifier.minify(input_file, target_file)
         input_file.close()
         target_file.close()
+    return None
 
 def concatenate(target, source, env):
     target_file = open(str(target[0]), 'wb')

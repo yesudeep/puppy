@@ -14,7 +14,8 @@ from builders import yui_compressor_minify, \
         pickle_function, \
         h_stitch_images, \
         v_stitch_images, \
-        html_minify
+        html_minify, \
+        jinja2_compile
 import pickle
 
 cheetahBuilder = Builder(generator=makeCheetahCommand, src_suffix='.tmpl', single_source = True)
@@ -34,7 +35,8 @@ def generate(env):
 
         'Cheetah': cheetahBuilder,
         'Pickle': pickleBuilder,
-
+        'Jinja2Compile': env.Builder(action=Action(jinja2_compile, "Compiling Jinja2 template '$TARGET' from '$SOURCE'")),
+        
         'StitchImages': h_stitch_images_builder,
         'HStitchImages': h_stitch_images_builder,
         'VStitchImages': v_stitch_images_builder,
@@ -44,4 +46,3 @@ def generate(env):
 
 def exists(env):
     return env.Detect('optipng') and env.Detect('jpegtran') and env.Detect('java') and env.Detect('cheetah') and env.Detect('montage')
-
