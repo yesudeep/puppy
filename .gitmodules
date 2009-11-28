@@ -1,3 +1,6 @@
 [submodule "lib/subcommand"]
 	path = lib/subcommand
 	url = git://github.com/anandology/subcommand.git
+[submodule "lib/haggoo"]
+	path = lib/haggoo
+	url = git://github.com/yesudeep/haggoo.git
