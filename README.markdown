@@ -303,6 +303,11 @@ Edit the first line of the dev_appserver.py script to look like:
 
     $ chmod u-w dev_appserver.py
 
+Now edit your .profile or .bashrc file to include these lines:
+
+    GOOGLE_APP_ENGINE_SDK_DIR=/wherever/you/installed/google_appengine
+    export PATH=$GOOGLE_APP_ENGINE_SDK_DIR:$PATH
+
 Now you should be able to get the console version of the SDK working.
 
 Using Puppy:
