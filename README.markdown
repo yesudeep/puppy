@@ -152,7 +152,10 @@ You will also need [git][git_macosx], [MacPorts][macports], and [XCode][xcode] i
 Install all the dependencies:
 -----------------------------
     $ sudo easy_install pyyaml Jinja2 SCons Cheetah
-    $ sudo port install pngcrush optipng ImageMagick
+    $ sudo port install pngcrush optipng
+
+Do NOT install ImageMagick yet.  Installing ImageMagick installs jpeg v6 
+with the current MacPorts.  You want jpeg v7 installed as well.  
 
 Troubleshooting the Cheetah installation:
 -----------------------------------------
@@ -190,9 +193,10 @@ will show you something like:
 
 Installing jpegtran:
 --------------------
-    $ curl http://ijg.org/files/jpegsrc.v7.tar.gz > /tmp/libjpeg.tar.gz    $ tar zxvf /tmp/libjpeg.tar.gz
+    $ curl http://ijg.org/files/jpegsrc.v7.tar.gz > /tmp/libjpeg.tar.gz    
+    $ tar zxvf /tmp/libjpeg.tar.gz
     $ cd /tmp/jpeg-7
-    $ ./configure
+    $ ./configure --enable-static --enable-shared
     $ make
     $ sudo make install
 
@@ -201,6 +205,54 @@ Checking whether jpegtran has been correctly installed:
     $ jpegtran -v
     Independent JPEG Group's JPEGTRAN, version 7  27-Jun-2009
     Copyright (C) 2009, Thomas G. Lane, Guido Vollbeding
+
+Google App Engine, Python2.5 and PIL:
+-------------------------------------
+Google App Engine currently works only with Python 2.5 and
+the Apple build for Python 2.5 on Snow Leopard is a 32-bit
+build, which causes a lot problems when you want PIL working
+correctly.  We recommend installing the MacPorts version of
+Python2.5, which is a 64-bit version.
+
+Apple's version:
+    
+    $ file /usr/bin/python2.5
+    /usr/bin/python2.5: Mach-O universal binary with 2 architectures
+    /usr/bin/python2.5 (for architecture i386): Mach-O executable i386
+    /usr/bin/python2.5 (for architecture ppc7400):  Mach-O executable ppc
+
+MacPorts' version:
+
+    $ sudo port install python25
+    
+    $ which python2.5
+    /opt/local/bin/python2.5
+
+    $ file `which python2.5`
+    /opt/local/bin/python2.5: Mach-O 64-bit executable x86_64
+
+Installing Python Imaging (PIL):
+--------------------------------
+Installing PIL for Python 2.6 on Snow Leopard should not be a problem,
+but here is the procedure for Python 2.5 (from MacPorts):
+
+    $ tar zxvf Imaging-1.1.6.tar.gz
+    $ cd Imaging-1.1.6
+
+    $ which python2.5
+    /opt/local/bin/python2.5
+    # Make sure python2.5 is the macports version for the next step.
+    
+    $ python2.5 setup.py build
+    # Everything should be OK here.
+
+    $ sudo python2.5 setup.py install
+
+Now, install ImageMagick using MacPorts:
+----------------------------------------
+Here's how you do it:
+
+    $ sudo port install ImageMagick
 
 All set.
 
@@ -236,6 +288,22 @@ If you are a bash user and want bash-completion enabled for puppy,
 you can include this line in your bash profile.
 
     source ${PUPPY_SDK_DIR}/tools/bash_completion/puppy
+
+Setting up Google App Engine SDK:
+=================================
+These instrucions apply while the SDK supports only Python 2.5.
+
+    $ cd <google_appengine_installation_dir>
+    
+    $ chmod u+w dev_appserver.py
+
+Edit the first line of the dev_appserver.py script to look like:
+
+    #!/usr/bin/env python2.5
+
+    $ chmod u-w dev_appserver.py
+
+Now you should be able to get the console version of the SDK working.
 
 Using Puppy:
 ============
