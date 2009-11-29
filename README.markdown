@@ -206,8 +206,8 @@ Checking whether jpegtran has been correctly installed:
     Independent JPEG Group's JPEGTRAN, version 7  27-Jun-2009
     Copyright (C) 2009, Thomas G. Lane, Guido Vollbeding
 
-Google App Engine, Python2.5 and PIL:
--------------------------------------
+Google App Engine, Snow Leopard, Python2.5 and PIL:
+---------------------------------------------------
 Google App Engine currently works only with Python 2.5 and
 the Apple build for Python 2.5 on Snow Leopard is a 32-bit
 build, which causes a lot problems when you want PIL working
