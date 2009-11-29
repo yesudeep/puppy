@@ -291,7 +291,7 @@ you can include this line in your bash profile.
 
 Setting up Google App Engine SDK:
 =================================
-These instrucions apply while the SDK supports only Python 2.5.
+These instructions apply while the SDK supports only Python 2.5.
 
     $ cd <google_appengine_installation_dir>
     
