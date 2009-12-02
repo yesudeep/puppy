@@ -268,7 +268,14 @@ directory for changes.  This may change in the future.
 Common to UNIX platforms:
 =========================
 Follow the [installation instructions][compass_installation] for Compass
-and the Compass 960 plugin.
+and the Compass 960 plugin.  Please also install the compass plugins:
+
+    chrisppestein-compass-960-plugin
+    compass-colors
+    fancy-buttons
+    compass-slickmap
+
+or more plugins based on what is used in your project.
 
 Clone the repository to a location on your disk and update submodules:
 
