@@ -58,9 +58,9 @@ def execute_command(command):
     subprocess.call(command, shell=True)
 
 def optimize_jpeg(target, source, env):
-    s = source[0]
-    t = target[0]
-    execute_command(' '.join(['jpegtran -optimize -outfile', str(t), str(s)]))
+    s = str(source[0])
+    t = str(target[0])
+    execute_command(' '.join(['jpegtran -optimize -progressive -outfile', t, s, '&& jpegoptim --strip-all', t]))
     return None
 
 def optimize_png(target, source, env):
