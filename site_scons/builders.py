@@ -60,7 +60,7 @@ def execute_command(command):
 def optimize_jpeg(target, source, env):
     s = source[0]
     t = target[0]
-    execute_command(' '.join(['jpegtran -optimize -progressive -outfile', str(t), str(s)]))
+    execute_command(' '.join(['jpegtran -optimize -outfile', str(t), str(s)]))
     return None
 
 def optimize_png(target, source, env):
