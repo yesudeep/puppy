@@ -65,7 +65,7 @@ Installation Requirements
 * [PNGCrush][pngcrush]
 * [Cheetah][cheetah]
 * [ImageMagick][imagemagick]
-
+* [JpegOptim][jpegoptim]
 
 Installing on Ubuntu:
 =====================
@@ -197,6 +197,15 @@ Installing jpegtran:
     $ tar zxvf /tmp/libjpeg.tar.gz
     $ cd /tmp/jpeg-7
     $ ./configure --enable-static --enable-shared
+    $ make
+    $ sudo make install
+
+Installing jpegoptim:
+---------------------
+Download it from [here][jpegoptim].
+
+    $ cd jpegoptim-1.2.3
+    $ ./configure 
     $ make
     $ sudo make install
 
@@ -346,4 +355,5 @@ Yet to be written.
 [git_macosx]: http://code.google.com/p/git-osx-installer/
 [macports]: http://www.macports.org/
 [xcode]: http://developer.apple.com/TOOLS/Xcode/
+[jpegoptim]: http://freshmeat.net/projects/jpegoptim/
 
