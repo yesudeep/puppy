@@ -46,7 +46,7 @@ def action_build_daemon(project_dir):
     try:
         import pyinotify
         from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes, ProcessEvent
-        logging.debug('pyinotify available, watching directories now')
+        #logging.debug('pyinotify available, watching directories now')
         from Queue import Queue
         from threading import Thread
         import time
@@ -107,7 +107,7 @@ def action_build_daemon(project_dir):
             watches.append(watch_manager.add_watch(path, EVENTS_MASK, rec=True))
 
     except ImportError:
-        logging.debug('pyinotify not found, scheduling periodic builds.')
+        #logging.debug('pyinotify not found, scheduling periodic builds.')
         import threading
         import time
 
@@ -130,7 +130,7 @@ def action_build_daemon(project_dir):
 
 
     try:
-        logging.info('First build')
+        #logging.info('First build')
         action_compass(project_dir)
         action_build(project_dir)
         action_run_server(project_dir)
@@ -253,7 +253,7 @@ def build(options, project_directory=None):
     if project_directory is None:
         project_directory = os.getcwd()
 
-    print project_directory
+    #print project_directory
     action_compass(project_directory)
     action_build(project_directory)
 
