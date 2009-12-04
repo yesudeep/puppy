@@ -54,7 +54,7 @@ SASS_PATTERNS = ['.sass', '.css']
 # Scons arguments.
 SCONS = 'scons'
 SITE_SCONS_DIR_PATH = path_join(SDK_DIR_PATH, 'site_scons')
-SCONS_ARGS = ['-s', '-Q', '--site-dir=' + SITE_SCONS_DIR_PATH]
+SCONS_ARGS = ['-Q', '--site-dir=' + SITE_SCONS_DIR_PATH]
 SCONS_BUILD_ARGS = SCONS_ARGS + ['-j', '4']
 SCONS_CLEAN_ARGS = SCONS_ARGS + ['-c']
 
