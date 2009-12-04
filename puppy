@@ -165,10 +165,10 @@ def action_compass(project_dir):
             config.COMPASS_ARGS + ['-c',
                 path_join(compass_config_dir, config.COMPASS_CONFIG),
                 '--update',
-                compass_config_dir])
+                compass_config_dir], echo=False)
 
 def action_build(project_dir):
-    execute_command(config.SCONS, config.SCONS_BUILD_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH])
+    execute_command(config.SCONS, config.SCONS_BUILD_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH], echo=False)
 
 def action_clean(project_dir):
     execute_command(config.SCONS, config.SCONS_CLEAN_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH])
