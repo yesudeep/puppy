@@ -82,7 +82,11 @@ def stitch_images(target, source, env, orientation='horizontal'):
         append = '+append'
     execute_command(' '.join(['convert ', sources, append, t]))
     if is_png(t):
+        logging.info("Optimizing (optipng) generated PNG image.")
         execute_command(' '.join(['optipng -q -o7', t]))
+    elif is_jpeg(t):
+        logging.info("Optimizing (jpegoptim) generated JPEG image.")
+        execute_command(" ".join(['jpegoptim --strip-all', t]))
     return None
 
 def h_stitch_images(target, source, env):
