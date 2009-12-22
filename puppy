@@ -11,6 +11,7 @@ import logging
 from util import remove_dir, execute_command, match_patterns, get_project_config
 from os.path import basename, join as path_join
 
+QUIET_MODE_DEFAULT_VALUE=False
 
 def check_tools():
     error = False
@@ -40,7 +41,7 @@ def action_run_server(project_dir):
     else:
         logging.debug('not supported/implemented yet')
 
-def action_build_daemon(project_dir):
+def action_build_daemon(project_dir, quiet_mode=QUIET_MODE_DEFAULT_VALUE):
     project_config = get_project_config(project_dir)
 
     try:
@@ -58,8 +59,8 @@ def action_build_daemon(project_dir):
             while True:
                 b = queue.get()
                 logging.info('building')
-                action_compass(project_dir)
-                action_build(project_dir)
+                action_compass(project_dir, quiet_mode)
+                action_build(project_dir, quiet_mode)
                 queue.task_done()
         build_worker = Thread(target=process_build_queue, args=(builder_queue,))
         build_worker.setDaemon(True)
@@ -112,8 +113,8 @@ def action_build_daemon(project_dir):
         import time
 
         def auto_build():
-            action_compass(project_dir)
-            action_build(project_dir)
+            action_compass(project_dir, quiet_mode)
+            action_build(project_dir, quiet_mode)
 
         def repeat(event, every, action):
             while True:
@@ -131,8 +132,8 @@ def action_build_daemon(project_dir):
 
     try:
         #logging.info('First build')
-        action_compass(project_dir)
-        action_build(project_dir)
+        action_compass(project_dir, quiet_mode)
+        action_build(project_dir, quiet_mode)
         action_run_server(project_dir)
     except KeyboardInterrupt, msg:
         logging.info('Terminating automatic builds.')
@@ -150,7 +151,7 @@ def action_build_daemon(project_dir):
         logging.info('Terminating server.')
         sys.exit(0)
 
-def action_compass(project_dir):
+def action_compass(project_dir, quiet_mode=QUIET_MODE_DEFAULT_VALUE):
     # This allows the user to update the configuration even while
     # the server/build daemon is running.  I know it's costly to read from
     # the file every time this is called, but it's trade-off in
@@ -162,13 +163,21 @@ def action_compass(project_dir):
     app_dir = project_config.query('application.app_dir', config.DEFAULT_APP_DIR)
     compass_config_dir = project_config.query('build.media.src_dir', path_join(app_dir, config.DEFAULT_MEDIA_SRC_DIR))
     execute_command(config.COMPASS,
-            config.COMPASS_ARGS + ['-c',
-                path_join(compass_config_dir, config.COMPASS_CONFIG),
-                '--update',
-                compass_config_dir], echo=False)
+            config.COMPASS_ARGS + [
+            '-q' if quiet_mode else '',
+            '-c', path_join(compass_config_dir, config.COMPASS_CONFIG),
+            '--update',
+            compass_config_dir
+            ],
+            echo=False)
 
-def action_build(project_dir):
-    execute_command(config.SCONS, config.SCONS_BUILD_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH], echo=False)
+def action_build(project_dir, quiet_mode=QUIET_MODE_DEFAULT_VALUE):
+    execute_command(config.SCONS, config.SCONS_BUILD_ARGS + [
+        '-s' if quiet_mode else '',
+        '-C', project_dir,
+        '-I', config.LIB_DIR_PATH
+        ],
+        echo=False)
 
 def action_clean(project_dir):
     execute_command(config.SCONS, config.SCONS_CLEAN_ARGS + ['-C', project_dir, '-I', config.LIB_DIR_PATH])
@@ -187,11 +196,10 @@ def action_purge(project_dir):
         logging.info('Deleting directory: %s' % dest_dir)
         remove_dir(dest_dir)
 
-def action_rebuild(project_dir):
+def action_rebuild(project_dir, quiet_mode=QUIET_MODE_DEFAULT_VALUE):
     action_purge(project_dir)
-    action_compass(project_dir)
-    action_build(project_dir)
-
+    action_compass(project_dir, quiet_mode=quiet_mode)
+    action_build(project_dir, quiet_mode=quiet_mode)
 
 @subcommand.subcommand()
 def server(options, project_directory=None):
@@ -205,6 +213,7 @@ def server(options, project_directory=None):
     -p [--port]    port int     : server port (default: 8000)
     -a [--address] address      : server address (default: 127.0.0.1)
     -s [--server-only]          : disables automatic build
+    -q [--quiet]                : quieter builds
     """
     if options.help:
         print server.__doc__
@@ -213,12 +222,17 @@ def server(options, project_directory=None):
     if project_directory is None:
         project_directory = os.getcwd()
 
+    if options.quiet:
+        quiet_mode = True
+    else:
+        quiet_mode = False
+
     project_config = get_project_config(project_directory)
 
     if options.server_only:
         action_run_server(project_directory)
     else:
-        action_build_daemon(project_directory)
+        action_build_daemon(project_directory, quiet_mode=quiet_mode)
 
 @subcommand.subcommand()
 def create_project(options, name=None, template='google-app-engine-python'):
@@ -245,17 +259,23 @@ def build(options, project_directory=None):
     Options:
 
     -h [--help]     : displays this help
+    -q [--quiet]    : quieter builds
     """
     if options.help:
         print build.__doc__
         sys.exit(1)
 
+    if options.quiet:
+        quiet_mode = True
+    else:
+        quiet_mode = False
+
     if project_directory is None:
         project_directory = os.getcwd()
 
     #print project_directory
-    action_compass(project_directory)
-    action_build(project_directory)
+    action_compass(project_directory, quiet_mode=quiet_mode)
+    action_build(project_directory, quiet_mode=quiet_mode)
 
 @subcommand.subcommand()
 def clean(options, project_directory=None):
@@ -266,6 +286,7 @@ def clean(options, project_directory=None):
     Options:
 
     -h [--help]     : displays this help
+    -q [--quiet]    : quieter builds
     """
     if options.help:
         print clean.__doc__
