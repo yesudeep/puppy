@@ -48,7 +48,7 @@ SCHEDULED_BUILD_DELAY = 2   # seconds
 # Compass arguments
 COMPASS = 'compass'
 COMPASS_CONFIG = 'compass_config.rb'
-COMPASS_ARGS = ['-q']
+COMPASS_ARGS = []
 SASS_PATTERNS = ['.sass', '.css']
 
 # Scons arguments.
