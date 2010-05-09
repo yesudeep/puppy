@@ -35,9 +35,14 @@ def action_run_server(project_dir):
     server_host = project_config.query('development.server.host', config.DEFAULT_SERVER_HOST)
     server_port = str(project_config.query('development.server.port', config.DEFAULT_SERVER_PORT))
 
+
     if framework == config.FRAMEWORK_GAE_PYTHON:
         app_dir = path_join(project_dir, app_dir)
         execute_command('dev_appserver.py', ['-a', server_host, '-p', server_port, app_dir])
+    elif framework == config.FRAMEWORK_TORNADO:
+        app_dir = path_join(project_dir, app_dir)
+        server_script = project_config.query('application.server_script')
+        execute_command('python', [path_join(app_dir, server_script)])
     else:
         logging.debug('not supported/implemented yet')
 
